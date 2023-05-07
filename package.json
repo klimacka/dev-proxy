@@ -1,0 +1,33 @@
+{
+  "name": "dev-proxy",
+  "version": "1.0.0",
+  "description": "Simple yet powerful TypeScript API proxy with built-in mocking capability.",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "postinstall": "ts-node ./src/post-install.ts",
+    "prepare-examples": "ts-node ./src/write-local-to-examples",
+    "watch": "nodemon index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klimacka/dev-proxy.git"
+  },
+  "author": "Janca Klimova",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/klimacka/dev-proxy/issues"
+  },
+  "homepage": "https://github.com/klimacka/dev-proxy#readme",
+  "dependencies": {
+    "http-proxy": "^1.18.1",
+    "sqlite3": "^5.1.6",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "devDependencies": {
+    "@types/http-proxy": "^1.17.11",
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8"
+  }
+}
