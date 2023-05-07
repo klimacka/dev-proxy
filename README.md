@@ -45,4 +45,5 @@ Set up in `config.ts` and `data/mockDb.ts`.
 
 ## Enjoying it?
 
-Let me know on e-mail: `klimu.jana@gmail.com`
+ * ⭐ Give the repo a star
+ * 🍺 [Buy me a beer](https://www.buymeacoffee.com/klimacka)
