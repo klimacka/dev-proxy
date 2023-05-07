@@ -1,6 +1,6 @@
 {
   "name": "dev-proxy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple yet powerful TypeScript API proxy with built-in mocking capability.",
   "main": "index.ts",
   "scripts": {
