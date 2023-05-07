@@ -1,0 +1,263 @@
+import { mockDb } from "./mockDb.local";
+import { overwriteWith } from "../src/proxy-server";
+import { Rule } from "../src/types";
+import url from "node:url";
+
+export const noRules = [];
+
+export const noOrganizationNoStandalones: Rule[] = [
+  {
+    startsWith: "/api/directory/organizations",
+    proxifyFn: (req, res) => {
+      overwriteWith(req, res, {
+        data: [],
+      });
+    },
+  },
+  {
+    startsWith: "/api/directory?",
+    proxifyFn: (req, res) => {
+      const params = url.parse(req.url!, true).query;
+      if (params.cloudProvider !== "aws") return;
+
+      overwriteWith(req, res, {
+        data: [],
+        pagination: { nextCursor: null, totalItems: 0 },
+      });
+    },
+  },
+];
+
+export const standalonesOnly: Rule[] = [
+  {
+    startsWith: "/api/directory/organization",
+    proxifyFn: (req, res) => {
+      overwriteWith(req, res, {
+        data: [],
+      });
+    },
+  },
+  {
+    startsWith: "/api/directory?",
+    proxifyFn: (req, res) => {
+      const params = url.parse(req.url!, true).query;
+      if (params.cloudProvider !== "aws") return;
+
+      const records = params.cloudOrg
+        ? []
+        : [
+            ...mockDb.directory.accounts.filter(
+              (item) => !item.cloudProviderOrganization
+            ),
+          ];
+      overwriteWith(req, res, {
+        data: records,
+        pagination: { nextCursor: null, totalItems: records.length },
+      });
+    },
+  },
+];
+
+export const singleOrganizationNoStandalones: Rule[] = [
+  {
+    startsWith: "/api/directory/organization",
+    proxifyFn: (req, res) => {
+      overwriteWith(req, res, {
+        data: [mockDb.directory.organizations[1]],
+      });
+    },
+  },
+  {
+    startsWith: "/api/directory?",
+    proxifyFn: (req, res) => {
+      const params = url.parse(req.url!, true).query;
+      if (params.cloudProvider !== "aws") return;
+
+      const records = params.cloudOrg
+        ? [
+            ...mockDb.directory.accounts.filter(
+              (item) => item.cloudProviderOrganization === params.cloudOrg
+            ),
+          ]
+        : [];
+      overwriteWith(req, res, {
+        data: records,
+        pagination: { nextCursor: null, totalItems: records.length },
+      });
+    },
+  },
+];
+
+export const singleOrganizationPlusStandalones: Rule[] = [
+  {
+    startsWith: "/api/directory/organization",
+    proxifyFn: (req, res) => {
+      overwriteWith(req, res, {
+        data: [mockDb.directory.organizations[1]],
+      });
+    },
+  },
+  {
+    startsWith: "/api/directory?",
+    proxifyFn: (req, res) => {
+      const params = url.parse(req.url!, true).query;
+      if (params.cloudProvider !== "aws") return;
+
+      const records = params.cloudOrg
+        ? [
+            ...mockDb.directory.accounts.filter(
+              (item) => item.cloudProviderOrganization === params.cloudOrg
+            ),
+          ]
+        : [
+            ...mockDb.directory.accounts.filter(
+              (item) => !item.cloudProviderOrganization
+            ),
+          ];
+      overwriteWith(req, res, {
+        data: records,
+        pagination: { nextCursor: null, totalItems: records.length },
+      });
+    },
+  },
+];
+
+export const multipleOrganizationsNoStandalones: Rule[] = [
+  {
+    startsWith: "/api/directory/organizations",
+    proxifyFn: (req, res) => {
+      overwriteWith(req, res, {
+        data: [...mockDb.directory.organizations],
+      });
+    },
+  },
+  {
+    startsWith: "/api/directory?",
+    proxifyFn: (req, res) => {
+      const params = url.parse(req.url!, true).query;
+      if (params.cloudProvider !== "aws") return;
+
+      const records = params.cloudOrg
+        ? [
+            ...mockDb.directory.accounts.filter(
+              (item) => item.cloudProviderOrganization === params.cloudOrg
+            ),
+          ]
+        : [];
+      overwriteWith(req, res, {
+        data: records,
+        pagination: { nextCursor: null, totalItems: records.length },
+      });
+    },
+  },
+];
+
+export const multipleOrganizationsPlusStandalones: Rule[] = [
+  {
+    startsWith: "/api/directory/organizations",
+    proxifyFn: (req, res) => {
+      overwriteWith(req, res, {
+        data: [...mockDb.directory.organizations],
+      });
+    },
+  },
+  {
+    startsWith: "/api/directory?",
+    proxifyFn: (req, res) => {
+      const params = url.parse(req.url!, true).query;
+      if (params.cloudProvider !== "aws") return;
+
+      const records = params.cloudOrg
+        ? [
+            ...mockDb.directory.accounts.filter(
+              (item) => item.cloudProviderOrganization === params.cloudOrg
+            ),
+          ]
+        : [
+            ...mockDb.directory.accounts.filter(
+              (item) => !item.cloudProviderOrganization
+            ),
+          ];
+      overwriteWith(req, res, {
+        data: records,
+        pagination: { nextCursor: null, totalItems: records.length },
+      });
+    },
+  },
+];
+
+export const multipleOrganizationsScopedPlusStandalonesGlobal: Rule[] = [
+  {
+    startsWith: "/api/directory/organizations",
+    proxifyFn: (req, res) => {
+      overwriteWith(req, res, {
+        data: [...mockDb.directory.organizations],
+      });
+    },
+  },
+  {
+    startsWith: "/api/directory?",
+    proxifyFn: (req, res) => {
+      const params = url.parse(req.url!, true).query;
+      if (params.cloudProvider !== "aws") return;
+
+      let records = params.cloudOrg
+        ? [
+            ...mockDb.directory.accounts.filter(
+              (item) => item.cloudProviderOrganization === params.cloudOrg
+            ),
+          ]
+        : [
+            ...mockDb.directory.accounts.filter(
+              (item) => !item.cloudProviderOrganization
+            ),
+          ];
+
+      if (params.accountIds && !params.cloudOrg) {
+        // No standalone accounts in scoped context
+        records = [];
+      }
+
+      overwriteWith(req, res, {
+        data: records,
+        pagination: { nextCursor: null, totalItems: records.length },
+      });
+    },
+  },
+];
+
+export const slowMultipleOrganizationsPlusStandalones: Rule[] = [
+  {
+    startsWith: "/api/directory/organization",
+    delayMilis: 5000,
+    proxifyFn: (req, res) => {
+      overwriteWith(req, res, {
+        data: [...mockDb.directory.organizations],
+      });
+    },
+  },
+  {
+    startsWith: "/api/directory?",
+    delayMilis: 3000,
+    proxifyFn: (req, res) => {
+      const params = url.parse(req.url!, true).query;
+      if (params.cloudProvider !== "aws") return;
+
+      const records = params.cloudOrg
+        ? [
+            ...mockDb.directory.accounts.filter(
+              (item) => item.cloudProviderOrganization === params.cloudOrg
+            ),
+          ]
+        : [
+            ...mockDb.directory.accounts.filter(
+              (item) => !item.cloudProviderOrganization
+            ),
+          ];
+      overwriteWith(req, res, {
+        data: records,
+        pagination: { nextCursor: null, totalItems: records.length },
+      });
+    },
+  },
+];

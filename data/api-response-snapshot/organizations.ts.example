@@ -1,0 +1,8 @@
+export const organizationsApi = {
+  data: [
+    {
+      internalOrgId: "o-819d19x1zh",
+      internalOrgName: "test-org-dev@example.net",
+    },
+  ],
+};
