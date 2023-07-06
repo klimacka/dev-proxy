@@ -28,6 +28,6 @@
   "devDependencies": {
     "@types/http-proxy": "^1.17.11",
     "nodemon": "^2.0.22",
-    "prettier": "^2.8.8"
+    "prettier": "^3.0.0"
   }
 }
