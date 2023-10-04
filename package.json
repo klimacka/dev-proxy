@@ -23,11 +23,11 @@
     "http-proxy": "^1.18.1",
     "sqlite3": "^5.1.6",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@types/http-proxy": "^1.17.11",
-    "nodemon": "^2.0.22",
-    "prettier": "^2.8.8"
+    "@types/http-proxy": "^1.17.12",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.3"
   }
 }
