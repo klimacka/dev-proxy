@@ -1,4 +1,0 @@
-export enum ApiTarget {
-  devStrapi = `http://localhost:1337`,
-  staging = `http://localhost:1338`,
-}

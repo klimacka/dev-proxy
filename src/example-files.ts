@@ -6,9 +6,6 @@ export const fileNames = [
   "./data/known-api-targets",
   "./data/rules-collection",
   "./data/mockDb",
-  "./data/api-response-snapshot/accounts",
-  "./data/api-response-snapshot/features",
-  "./data/api-response-snapshot/organizations",
 ];
 
 export const prepareLocalCopy = (sourcePath: string, targetPath: string): void => {
