@@ -12,6 +12,7 @@ export const proxify = (
 
   proxy.web(req, res, {
     target: liveApiTarget,
+    changeOrigin: true,
   });
 
   const rule = activeRules.find(
