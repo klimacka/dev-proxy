@@ -5,19 +5,11 @@ import { ApiTarget } from "./data/known-api-targets.local";
 export const logToSqlite = false;
 export const listenOnPort = 55555;
 
-export const liveApiTarget = ApiTarget.devStrapi;
+export const liveApiTarget = ApiTarget.KubernetesIntegration;
 
 const disableAllRules = false;
 export const activeRules: Rule[] = disableAllRules
   ? rules.noRules
   : [
-      // ...rules.noRules,
-      // ...rules.noOrganizationNoStandalones,
-      // ...rules.standalonesOnly,
-      // ...rules.singleOrganizationNoStandalones,
-      // ...rules.singleOrganizationPlusStandalones,
-      // ...rules.multipleOrganizationsNoStandalones,
-      // ...rules.multipleOrganizationsPlusStandalones,
-      // ...rules.multipleOrganizationsScopedPlusStandalonesGlobal,
-      ...rules.slowMultipleOrganizationsPlusStandalones,
+      ...rules.noRules,
     ];

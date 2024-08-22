@@ -1,0 +1,6 @@
+export enum ApiTarget {
+  KubernetesStaging = `https://www.transen-test.xcroco.com`,
+  KubernetesIntegration = `https://www.transen-integration.xcroco.com`,
+  KubernetesDevelopment = `https://www.transen-development.xcroco.com`,
+  LocalDocker = `http://www.ashemaletube.test`,
+}
