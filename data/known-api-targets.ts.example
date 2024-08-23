@@ -1,4 +1,6 @@
 export enum ApiTarget {
-  devStrapi = `http://localhost:1337`,
-  staging = `http://localhost:1338`,
+  KubernetesStaging = `https://staging.example.net`,
+  KubernetesIntegration = `https://integration.example.net`,
+  KubernetesDevelopment = `https://development.example.net`,
+  LocalDocker = `http://localhost`,
 }
